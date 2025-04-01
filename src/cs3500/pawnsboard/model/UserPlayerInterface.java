@@ -11,6 +11,7 @@ public interface UserPlayerInterface {
    * Selects the specified card from the player's hand to place in queue to be played.
    * @param index the index of the card
    * @throws IllegalArgumentException if index is not valid for player
+   * @throws IllegalStateException if not currently this player's turn
    */
   void selectCard(int index);
 
@@ -19,6 +20,7 @@ public interface UserPlayerInterface {
    * @param row the row to place the card in
    * @param col the column to place the card in
    * @throws IllegalArgumentException if row or column are out of bounds
+   * @throws IllegalStateException if not currently this player's turn
    */
   void selectCell(int row, int col);
 
