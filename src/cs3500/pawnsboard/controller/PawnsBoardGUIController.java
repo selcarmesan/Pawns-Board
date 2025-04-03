@@ -26,6 +26,9 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
     this.player = player;
     this.view = view;
     changeTurn(model.getCurrentTurn());
+    if (model.getCurrentTurn() == this.player.getThisPlayer()) {
+      notifyView("Your turn has started");
+    }
   }
 
   /**
