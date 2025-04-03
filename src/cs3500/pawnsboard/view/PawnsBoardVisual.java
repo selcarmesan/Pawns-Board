@@ -29,4 +29,11 @@ public interface PawnsBoardVisual extends PawnsBoardView {
    * @return lastChosenCard
    */
   PawnsBoardCardPanel getLastChosenCard();
+
+  /**
+   * Notifies the GUI in a popup message of the provided message.
+   * @param message the message notification
+   * @throws IllegalArgumentException if message is null
+   */
+   void notify(String message);
 }

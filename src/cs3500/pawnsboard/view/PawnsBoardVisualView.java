@@ -6,6 +6,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,17 +17,22 @@ import javax.swing.BorderFactory;
 import cs3500.pawnsboard.model.Card;
 import cs3500.pawnsboard.model.PawnsBoardReadOnly;
 import cs3500.pawnsboard.model.Player;
+import cs3500.pawnsboard.model.observer.UserPlayerActionSubscriber;
+import cs3500.pawnsboard.model.observer.UserPlayerActions;
 
 /**
  * A simple graphical interface for a game of PawnsBoard.
  */
-public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, KeyListener {
+public class PawnsBoardVisualView extends JFrame
+        implements PawnsBoardVisual, KeyListener, UserPlayerActions {
 
   PawnsBoardReadOnly model;
   private int width;
   private int height;
+  private final Player player;
   private PawnsBoardCellButton lastChosenCell;
   private PawnsBoardCardPanel lastChosenCard;
+  private final List<UserPlayerActionSubscriber> listeners;
 
   /**
    * A constructor for PawnsBoardVisualView, which takes in a game of PawnsBoard in read only.
@@ -34,15 +40,16 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
    * @param model PawnsBoardReadOnly
    * @throws IllegalArgumentException when the model is null
    */
-  public PawnsBoardVisualView(PawnsBoardReadOnly model) {
-    if (Objects.isNull(model)) {
-      throw new IllegalArgumentException("Invalid Model");
+  public PawnsBoardVisualView(PawnsBoardReadOnly model, Player player) {
+    if (Objects.isNull(model) || Objects.isNull(player)) {
+      throw new IllegalArgumentException("Invalid Model or player");
     }
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setTitle("PawnsBoard");
     this.setSize(1280, 720);
     this.width = this.getWidth();
     this.height = this.getHeight();
+    this.player = player;
     this.model = model;
     this.setLayout(null);
     //this.setResizable(false);
@@ -56,17 +63,18 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
         update();
       }
     });
-    this.setTitle(String.format("Player: %s", model.getCurrentTurn()));
+    this.setTitle(String.format("Turn: %s", model.getCurrentTurn()));
     lastChosenCell = null;
     lastChosenCard = null;
     generateBoard();
     generateCards();
+    listeners = new ArrayList<>();
   }
 
   @Override
   public void update() {
     //Update the title
-    this.setTitle(String.format("Player: %s", model.getCurrentTurn()));
+    this.setTitle(String.format("Turn: %s", model.getCurrentTurn()));
 
     //Remove Previous Board
     this.getContentPane().removeAll();
@@ -121,12 +129,11 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
   }
 
   private void generateCards() {
-    Player currentPlayer = model.getCurrentTurn();
-    List<Card> hand = model.getHand(currentPlayer);
+    List<Card> hand = model.getHand(player);
     int cellSizeX = width / hand.size();
     int cellSizeY = height / (model.getRows() + 2);
     for (int i = 0; i < hand.size(); i++) {
-      PawnsBoardCardPanel card = new PawnsBoardCardPanel(hand.get(i), currentPlayer,
+      PawnsBoardCardPanel card = new PawnsBoardCardPanel(hand.get(i), player,
               i * cellSizeX, model.getRows() * cellSizeY,
               cellSizeX, cellSizeY * 2, i, this);
       this.add(card);
@@ -208,14 +215,71 @@ public class PawnsBoardVisualView extends JFrame implements PawnsBoardVisual, Ke
   @Override
   public void keyPressed(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-      System.out.println("Confirm");
+      if (lastChosenCell == null || lastChosenCard == null) {
+        notify("You must select a cell and card to play.");
+      } else {
+        makePlay(lastChosenCell.getRow(), lastChosenCell.getCol(), lastChosenCard.getIndex());
+      }
     } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-      System.out.println("Pass");
+      skipTurn();
     }
   }
 
   @Override
   public void keyReleased(KeyEvent e) {
     // Placeholder
+  }
+
+  /**
+   * Plays the card based on the already selected/highlighted cell on the board, and card within the
+   * hand.
+   *
+   * @param row   the row
+   * @param col   the column
+   * @param index the hand index
+   * @throws IllegalArgumentException if the move is invalid given the selected space and card
+   * @throws IllegalStateException    if it is not this player's turn
+   */
+  @Override
+  public void makePlay(int row, int col, int index) {
+    for (UserPlayerActionSubscriber listener : listeners) {
+      listener.makeMove(row, col, index);
+    }
+  }
+
+  /**
+   * Skips the current player's turn.
+   *
+   * @throws IllegalStateException if it is not this player's turn
+   */
+  @Override
+  public void skipTurn() {
+    for (UserPlayerActionSubscriber listener : listeners) {
+      listener.passMove();
+    }
+  }
+
+  /**
+   * Subscribes the listener to these action events.
+   *
+   * @param listener the listener
+   * @throws IllegalArgumentException if listener is null
+   */
+  @Override
+  public void addListener(UserPlayerActionSubscriber listener) {
+    if (listener == null) {
+      throw new IllegalArgumentException("Listener must not be null");
+    }
+    this.listeners.add(listener);
+  }
+
+  /**
+   * Notifies the GUI in a popup message of the provided message.
+   * @param message the message notification
+   */
+  @Override
+  public void notify(String message) {
+    System.out.println("Popup for " + player + ": " + message);
+    // Add some code to have a popup or some other component to notify with the message
   }
 }

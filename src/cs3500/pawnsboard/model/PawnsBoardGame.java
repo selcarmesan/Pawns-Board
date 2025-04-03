@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import cs3500.pawnsboard.model.observer.ModelUpdateSubscriber;
+import cs3500.pawnsboard.model.observer.ModelUpdates;
+
 /**
  * A game of pawns board.  The game begins with an empty board of specified dimensions, with the
  * restrictions being that the board is rectangular, with a positive number of rows, and an odd
@@ -17,7 +20,7 @@ import java.util.Random;
  * player with the most points from the rows they claimed is the victor at the end, or it ends in a
  * draw.
  */
-public class PawnsBoardGame implements PawnsBoard {
+public class PawnsBoardGame implements PawnsBoard, ModelUpdates {
 
   //<editor-fold desc="Fields">
   private final int rows;
@@ -26,6 +29,9 @@ public class PawnsBoardGame implements PawnsBoard {
   private boolean randomDraw;
   private boolean gameStarted;
   private boolean gameOver;
+
+  private final List<ModelUpdateSubscriber> redListeners;
+  private final List<ModelUpdateSubscriber> blueListeners;
 
   // Is 0 indexed, and (row, col) ordered for all calls
   private Cell[][] board;
@@ -58,6 +64,8 @@ public class PawnsBoardGame implements PawnsBoard {
     this.rows = rows;
     this.cols = cols;
     this.rand = new Random();
+    this.redListeners = new ArrayList<>();
+    this.blueListeners = new ArrayList<>();
   }
 
   /**
@@ -83,6 +91,8 @@ public class PawnsBoardGame implements PawnsBoard {
     this.rows = rows;
     this.cols = cols;
     this.rand = rand;
+    this.redListeners = new ArrayList<>();
+    this.blueListeners = new ArrayList<>();
   }
   //</editor-fold>
 
@@ -172,6 +182,7 @@ public class PawnsBoardGame implements PawnsBoard {
     currentTurn = Player.RED;
     gameStarted = true;
     gameOver = false;
+    turnStartedRed();
   }
 
   private void assertDeckValidity(List<Card> redDeck, List<Card> blueDeck, int handSize) {
@@ -472,6 +483,7 @@ public class PawnsBoardGame implements PawnsBoard {
     }
     if (lastPassed) {
       gameOver = true;
+      gameEnded();
     }
     lastPassed = true;
     swapTurn();
@@ -523,6 +535,11 @@ public class PawnsBoardGame implements PawnsBoard {
     if (firstTurnOver) {
       drawCard(getCurrentTurn());
     }
+    if (currentTurn == Player.RED) {
+      turnStartedRed();
+    } else {
+      turnStartedBlue();
+    }
     firstTurnOver = true;
   }
 
@@ -558,6 +575,85 @@ public class PawnsBoardGame implements PawnsBoard {
       return Player.BLUE;
     } else {
       return Player.RED;
+    }
+  }
+  //</editor-fold>
+
+  //<editor-fold desc="Notifications">
+  /**
+   * Notification for when the turn of player red has just begun.
+   */
+  @Override
+  public void turnStartedRed() {
+    if (isGameOver()) {
+      return;
+    }
+    for (ModelUpdateSubscriber listener : redListeners) {
+      listener.notifyView("Your turn has started!");
+    }
+    turnStarted(Player.RED);
+  }
+
+  /**
+   * Notification for when the turn of player blue has just begun.
+   */
+  @Override
+  public void turnStartedBlue() {
+    if (isGameOver()) {
+      return;
+    }
+    for (ModelUpdateSubscriber listener : blueListeners) {
+      listener.notifyView("Your turn has started!");
+    }
+    turnStarted(Player.BLUE);
+  }
+
+  private void turnStarted(Player player) {
+    for (ModelUpdateSubscriber listener : redListeners) {
+      listener.changeTurn(player);
+    }
+    for (ModelUpdateSubscriber listener : blueListeners) {
+      listener.changeTurn(player);
+    }
+  }
+
+  /**
+   * Notification for when the game has ended.
+   */
+  @Override
+  public void gameEnded() {
+    for (ModelUpdateSubscriber listener : redListeners) {
+      if (getWinner() == null) {
+        listener.notifyView("Game has ended. Tie game.");
+      } else {
+        listener.notifyView("Game has ended. Winner is " + getWinner());
+      }
+    }
+    for (ModelUpdateSubscriber listener : blueListeners) {
+      if (getWinner() == null) {
+        listener.notifyView("Game has ended. Tie game.");
+      } else {
+        listener.notifyView("Game has ended. Winner is " + getWinner());
+      }
+    }
+  }
+
+  /**
+   * Adds a listener for the model update events.
+   * @param listener the listener to add
+   * @param player the player to give updates for
+   * @throws IllegalArgumentException if listener is null
+   *                                  if player is null
+   */
+  @Override
+  public void addListener(ModelUpdateSubscriber listener, Player player) {
+    if (listener == null || player == null) {
+      throw new IllegalArgumentException("Listener and player cannot be null");
+    }
+    if (player == Player.RED) {
+      redListeners.add(listener);
+    } else {
+      blueListeners.add(listener);
     }
   }
   //</editor-fold>

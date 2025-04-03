@@ -91,7 +91,6 @@ public class PawnsBoardCardPanel extends JPanel implements PawnsBoardPanel, Mous
 
   @Override
   public void mouseClicked(MouseEvent e) {
-    System.out.println("Player: " + player + ", Index: " + index);
     if (!this.getBackground().equals(Color.CYAN)) {
       this.setBackground(Color.CYAN);
     }

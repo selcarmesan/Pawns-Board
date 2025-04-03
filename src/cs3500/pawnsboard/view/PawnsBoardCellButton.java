@@ -68,7 +68,6 @@ public class PawnsBoardCellButton extends JButton implements PawnsBoardButton, A
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == this) {
-      System.out.println("Row: " + row + ", Col: " + col);
       if (!this.getBackground().equals(Color.CYAN)) {
         this.setBackground(Color.CYAN);
       }

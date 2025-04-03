@@ -1,42 +1,28 @@
 package cs3500.pawnsboard.model;
 
+import cs3500.pawnsboard.model.strategies.PawnsBoardStrategy;
+
 /**
- * The interface in which a user-player interacts with the system, either through user input or
- * through an automated player using strategies.  Has a model to delegate to when instantiated, as
- * well as a specification for which player this is.
+ * Necessary actions a UserPlayer can take that are unrelated to human-player-driven events.
  */
 public interface UserPlayerInterface {
 
   /**
-   * Selects the specified card from the player's hand to place in queue to be played.
-   * @param index the index of the card
-   * @throws IllegalArgumentException if index is not valid for player
-   * @throws IllegalStateException if not currently this player's turn
+   * Decides and plays the next move for this player.
+   *
+   * @throws IllegalStateException if this player is not a machine
    */
-  void selectCard(int index);
+  void decideMove();
 
   /**
-   * Selects the specified row and column on the board to put in queue for the next play.
-   * @param row the row to place the card in
-   * @param col the column to place the card in
-   * @throws IllegalArgumentException if row or column are out of bounds
-   * @throws IllegalStateException if not currently this player's turn
+   * Returns which player color that this player represents.
+   * @return the player color
    */
-  void selectCell(int row, int col);
+  Player getThisPlayer();
 
   /**
-   * Plays the card based on the already selected/highlighted cell on the board, and card within the
-   * hand.
-   * @throws IllegalArgumentException if the move is invalid given the selected space and card
-   *                                  if a cell row and column has not been selected yet
-   *                                  if a card has not been selected yet
-   * @throws IllegalStateException if it is not this player's turn
+   * Returns whether this player represents a machine or not.
+   * @return if it is a machine
    */
-  void makePlay();
-
-  /**
-   * Skips the current player's turn.
-   * @throws IllegalStateException if it is not this player's turn
-   */
-  void skipTurn();
+  boolean isMachine();
 }

@@ -16,13 +16,13 @@ Clone the repository 'git clone https://github.com/selcarmesan/Pawns-Board/' \
 Navigate to the directory and ensure dependencies are install (OpenJDK 20.0.1)
 
 ## Quick-Start:
-For project usage either use implementations of PawnsBoard to manually play
-i.e. new PawnsBoardGame(2, 3).startGame();
+For project usage either manually run the main file and follow the command line instructions before
+opening the GUI.
 
 Alternatively, run the .jar file, making sure the supporting docs containing the config files in 
 the same folder.
 
-Keyboard input to confirm is the enter key and the input to pass is the space bar.
+Keyboard input to confirm is the enter key and the input to pass is the space bar while playing.
 
 ## Components:
 This game consists of two major portions, the model, controller, and view.  The model acts as the
@@ -54,12 +54,18 @@ throws an exception.
 A view takes in a game of pawns board, and while active, is able to represent the board and hands
 in some form, whether through a GUI or a simple textual view.
 
-The main class tests the functionality of the game. It runs a predetermined game of pawns board,
-playing each move with the game class and displaying using the view.
+The controller needs a model of the game, a view for the model, and a player that this controller 
+controls the actions of.  If the player is a machine, it will take the actions for them every turn
+based on that machine players' strategy.  If the player is a human, the controller will listen for
+events through interaction with the GUI and make the according plays.
+
+The main class allows you to play a simple game after specifying in command-line the parameters
+for both of the players.
 
 ## Organization:
-All objects related to the model of the game can be found within the model package. \
-The class that reads from a file and converts it into a list of cards is in the controller package.\
+All objects related to the model of the game and observers can be found within the model package. \
+The controller for the game is found within the controller package, as well as the class that 
+reads from a file and converts it into a list of cards.\
 The view package contains the available views for the model, a textual representation and a GUI.\
 The main class is placed in pawns board package outside of model and view.\
 The docs folder contains the default supplied deck config files.
@@ -86,3 +92,9 @@ This is because they had slightly different purposes, so it was poor design to o
 function to achieve this.
 - Changed PawnsCardReader to only allow for reading from a specified file, rather than a default.  
 This is to fix a misread on the instructions within the previous assignment.
+
+Homework 7 Changelog:
+- Changed the model and view to implement the proper update/observer interfaces, and edited the
+methods in them to correctly call them during the proper events.
+- Changed the view to only care about a single player that is specified upon construction, only 
+showing their hand, and only allowing them to interact when it is their turn.
