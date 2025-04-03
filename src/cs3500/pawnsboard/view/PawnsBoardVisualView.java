@@ -225,6 +225,8 @@ public class PawnsBoardVisualView extends JFrame
         notify("You must select a cell and card to play.");
       } else {
         makePlay(lastChosenCell.getRow(), lastChosenCell.getCol(), lastChosenCard.getIndex());
+        lastChosenCell = null;
+        lastChosenCard = null;
       }
     } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
       skipTurn();
