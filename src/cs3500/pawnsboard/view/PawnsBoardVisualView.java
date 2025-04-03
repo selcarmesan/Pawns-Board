@@ -13,6 +13,7 @@ import java.util.Objects;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 
 import cs3500.pawnsboard.model.Card;
 import cs3500.pawnsboard.model.PawnsBoardReadOnly;
@@ -281,5 +282,7 @@ public class PawnsBoardVisualView extends JFrame
   public void notify(String message) {
     System.out.println("Popup for " + player + ": " + message);
     // Add some code to have a popup or some other component to notify with the message
+    JOptionPane.showMessageDialog(null, message,
+            "Popup for " + player + ":", JOptionPane.INFORMATION_MESSAGE);
   }
 }
