@@ -84,6 +84,11 @@ public class PawnsBoardVisualView extends JFrame
     this.generateBoard();
     this.generateCards();
 
+    //Window On Top
+    if (model.getCurrentTurn().equals(player)) {
+      setVisible(true);
+    }
+
     //Update JFrame to Display Changes
     this.repaint();
     this.revalidate();
