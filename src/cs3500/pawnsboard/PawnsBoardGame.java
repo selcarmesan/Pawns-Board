@@ -1,9 +1,7 @@
 package cs3500.pawnsboard;
 
 import java.io.File;
-import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Scanner;
 
 import cs3500.pawnsboard.controller.PawnsBoardGUIController;
 import cs3500.pawnsboard.model.Card;
