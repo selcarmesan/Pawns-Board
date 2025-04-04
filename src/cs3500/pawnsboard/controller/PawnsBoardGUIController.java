@@ -1,6 +1,6 @@
 package cs3500.pawnsboard.controller;
 
-import cs3500.pawnsboard.model.PawnsBoardGame;
+import cs3500.pawnsboard.model.PawnsBoardSimple;
 import cs3500.pawnsboard.model.Player;
 import cs3500.pawnsboard.model.UserPlayer;
 import cs3500.pawnsboard.model.observer.ModelUpdateSubscriber;
@@ -12,11 +12,11 @@ import cs3500.pawnsboard.view.PawnsBoardVisualView;
  */
 public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlayerActionSubscriber {
 
-  private final PawnsBoardGame model;
+  private final PawnsBoardSimple model;
   private final UserPlayer player;
   private final PawnsBoardVisualView view;
 
-  public PawnsBoardGUIController(PawnsBoardGame model, UserPlayer player, PawnsBoardVisualView view) {
+  public PawnsBoardGUIController(PawnsBoardSimple model, UserPlayer player, PawnsBoardVisualView view) {
     if (model == null || player == null || view == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }

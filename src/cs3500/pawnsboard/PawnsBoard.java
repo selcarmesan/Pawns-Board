@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import cs3500.pawnsboard.model.Card;
-import cs3500.pawnsboard.model.PawnsBoardGame;
+import cs3500.pawnsboard.model.PawnsBoardSimple;
 import cs3500.pawnsboard.controller.PawnsCardReader;
 import cs3500.pawnsboard.model.Player;
 import cs3500.pawnsboard.view.PawnsBoardTextualView;
@@ -25,7 +25,7 @@ public class PawnsBoard {
     List<Card> blueDeck = PawnsCardReader.readCards(Player.BLUE, file);
 
     //Initializing PawnsBoardGame
-    PawnsBoardGame game = new PawnsBoardGame(3, 5);
+    PawnsBoardSimple game = new PawnsBoardSimple(3, 5);
     game.startGame(redDeck, blueDeck, 5, false);
 
     //Initializing PawnsBoardTextualView

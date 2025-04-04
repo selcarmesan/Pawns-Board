@@ -7,7 +7,7 @@ import cs3500.pawnsboard.controller.PawnsCardReader;
 import cs3500.pawnsboard.model.Card;
 import cs3500.pawnsboard.model.Cell;
 import cs3500.pawnsboard.model.PawnsBoard;
-import cs3500.pawnsboard.model.PawnsBoardGame;
+import cs3500.pawnsboard.model.PawnsBoardSimple;
 import cs3500.pawnsboard.model.Player;
 
 /**
@@ -22,7 +22,7 @@ public class MockBoardTranscript implements PawnsBoard {
    * Creates a new mock board transcript.
    */
   public MockBoardTranscript(StringBuilder sb) {
-    board = new PawnsBoardGame(3, 5);
+    board = new PawnsBoardSimple(3, 5);
     log = sb;
   }
 

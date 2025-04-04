@@ -29,7 +29,7 @@ public class PawnsBoardTest {
 
   @Before
   public void setUp() {
-    board = new PawnsBoardGame(2, 3);
+    board = new PawnsBoardSimple(2, 3);
     boolean[][] testGrid = new boolean[5][5];
     testGrid[2][2] = true;
     Card test1Red = new PawnsCard("test1", 1, 1, testGrid);
@@ -61,27 +61,27 @@ public class PawnsBoardTest {
   @Test
   public void testConstructorThrowsInvalidRowsOrCols() {
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsBoardGame(0, 5));
+        () -> new PawnsBoardSimple(0, 5));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsBoardGame(3, 0));
+        () -> new PawnsBoardSimple(3, 0));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsBoardGame(3, 2));
+        () -> new PawnsBoardSimple(3, 2));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsBoardGame(3, 4));
+        () -> new PawnsBoardSimple(3, 4));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsBoardGame(0, 5, new Random()));
+        () -> new PawnsBoardSimple(0, 5, new Random()));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsBoardGame(3, 0, new Random()));
+        () -> new PawnsBoardSimple(3, 0, new Random()));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsBoardGame(3, 2, new Random()));
+        () -> new PawnsBoardSimple(3, 2, new Random()));
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsBoardGame(3, 4, new Random()));
+        () -> new PawnsBoardSimple(3, 4, new Random()));
   }
 
   @Test
   public void testConstructThrowsNullRandom() {
     assertThrows(IllegalArgumentException.class,
-        () -> new PawnsBoardGame(3, 5, null));
+        () -> new PawnsBoardSimple(3, 5, null));
   }
 
   @Test
@@ -98,7 +98,7 @@ public class PawnsBoardTest {
 
   @Test
   public void testStartGameCardReaderWorks() {
-    board = new PawnsBoardGame(1, 3);
+    board = new PawnsBoardSimple(1, 3);
     board.startGame(redConfigDeck, blueConfigDeck, 1, false);
     assertEquals(Player.RED, board.getCurrentTurn());
     for (int i = 0; i < board.getRows(); i++) {
@@ -340,7 +340,7 @@ public class PawnsBoardTest {
 
   @Test
   public void testRandomDrawWorks() {
-    board = new PawnsBoardGame(2, 3, new Random(1));
+    board = new PawnsBoardSimple(2, 3, new Random(1));
     board.startGame(redCards, blueCards, 1, true);
     Card firstCard = redCards.get((new Random(1).nextInt(redCards.size())));
     board.placeCard(0, 0, 0);
@@ -606,7 +606,7 @@ public class PawnsBoardTest {
 
   @Test
   public void testPlayMultipleMovesWorks() {
-    board = new PawnsBoardGame(3, 5);
+    board = new PawnsBoardSimple(3, 5);
     board.startGame(redConfigDeck, blueConfigDeck, 5, false);
     board.placeCard(0, 0, 0);
     // Grab -> (0,1), (0,2) +1 Red pawn (1 total)
@@ -656,7 +656,7 @@ public class PawnsBoardTest {
     left[2][1] = true;
     smallBlue.set(0, new PawnsCard("test", 1, 1, left));
     smallBlue.set(1, new PawnsCard("test", 1, 1, left));
-    board = new PawnsBoardGame(1, 3);
+    board = new PawnsBoardSimple(1, 3);
     board.startGame(smallRed, smallBlue, 1, false);
     board.skipTurn();
     board.placeCard(0, 2, 0);

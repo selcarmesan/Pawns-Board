@@ -20,7 +20,7 @@ import cs3500.pawnsboard.model.observer.ModelUpdates;
  * player with the most points from the rows they claimed is the victor at the end, or it ends in a
  * draw.
  */
-public class PawnsBoardGame implements PawnsBoard, ModelUpdates {
+public class PawnsBoardSimple implements PawnsBoard, ModelUpdates {
 
   //<editor-fold desc="Fields">
   private final int rows;
@@ -54,7 +54,7 @@ public class PawnsBoardGame implements PawnsBoard, ModelUpdates {
    * @throws IllegalArgumentException if rows or columns is not positive
    *                                  if columns is not odd and greater than two
    */
-  public PawnsBoardGame(int rows, int cols) {
+  public PawnsBoardSimple(int rows, int cols) {
     if (rows < 1) {
       throw new IllegalArgumentException("rows must be greater than 0");
     }
@@ -78,7 +78,7 @@ public class PawnsBoardGame implements PawnsBoard, ModelUpdates {
    *                                  if columns is not odd and greater than two
    *                                  if the given random is null
    */
-  public PawnsBoardGame(int rows, int cols, Random rand) {
+  public PawnsBoardSimple(int rows, int cols, Random rand) {
     if (rows < 1) {
       throw new IllegalArgumentException("rows must be greater than 0");
     }

@@ -10,7 +10,7 @@ import java.util.List;
 import cs3500.pawnsboard.controller.PawnsCardReader;
 import cs3500.pawnsboard.model.Card;
 import cs3500.pawnsboard.model.PawnsBoard;
-import cs3500.pawnsboard.model.PawnsBoardGame;
+import cs3500.pawnsboard.model.PawnsBoardSimple;
 import cs3500.pawnsboard.model.PawnsCard;
 import cs3500.pawnsboard.model.Player;
 
@@ -30,7 +30,7 @@ public class PawnsBoardTextualViewTest {
 
   @Before
   public void setUp() {
-    board = new PawnsBoardGame(2, 3);
+    board = new PawnsBoardSimple(2, 3);
     boolean[][] testGrid = new boolean[5][5];
     testGrid[2][2] = true;
     Card test1Red = new PawnsCard("test1", 1, 1, testGrid);
