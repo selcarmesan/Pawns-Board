@@ -417,6 +417,13 @@ public class PawnsBoardTest {
   }
 
   @Test
+  public void testIsMoveValidThrowsNullPlayer() {
+    board.startGame(redCards, blueCards, 1, false);
+    assertThrows(IllegalArgumentException.class,
+        () -> board.isMoveValid(0, 0, 0, null));
+  }
+
+  @Test
   public void testMoveInvalidCardAlreadyOccupied() {
     board.startGame(redCards, blueCards, 1, false);
     board.placeCard(0, 0, 0);
