@@ -96,10 +96,10 @@ public class UserPlayer implements UserPlayerActions, UserPlayerInterface {
     if (strategy == null) {
       throw new IllegalStateException("This player is not a machine, and does not use a strategy.");
     }
-    Move move = strategy.choosePlay(model, player);
-    if (move != null) {
+    try {
+      Move move = strategy.choosePlay(model, player);
       makePlay(move.row, move.col, move.handIndex);
-    } else {
+    } catch (IllegalStateException e) {
       skipTurn();
     }
   }

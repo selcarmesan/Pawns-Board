@@ -22,6 +22,7 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
     }
     model.addListener(this, player.getThisPlayer());
     view.addListener(this);
+    player.addListener(this);
     this.model = model;
     this.player = player;
     this.view = view;
@@ -38,7 +39,9 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
    */
   @Override
   public void notifyView(String message) {
-    view.notify(message);
+    if (!player.isMachine()) {
+      view.notify(message);
+    }
   }
 
   /**
@@ -48,6 +51,7 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
    */
   @Override
   public void changeTurn(Player player) {
+    System.out.println("Changing turn to " + player + "for " + this.player.getThisPlayer());
     if (model.isGameOver()) {
       view.setEnabled(true);
       return;
@@ -73,12 +77,12 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
   @Override
   public void makeMove(int row, int col, int index) {
     if (model.isGameOver()) {
-      view.notify("Game is Over");
+      notifyView("Game is Over");
     } else if (model.getCurrentTurn() != player.getThisPlayer()) {
-      view.notify("It is not your turn!");
+      notifyView("It is not your turn!");
     } else {
       if (!model.isMoveValid(row, col, index, player.getThisPlayer())) {
-        view.notify("Move invalid.");
+        notifyView("Move invalid.");
       } else {
         model.placeCard(row, col, index);
         view.update();
@@ -92,9 +96,9 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
   @Override
   public void passMove() {
     if (model.isGameOver()) {
-      view.notify("Game is Over");
+      notifyView("Game is Over");
     } else if (model.getCurrentTurn() != player.getThisPlayer()) {
-      view.notify("It is not your turn!");
+      notifyView("It is not your turn!");
     } else {
       model.skipTurn();
       view.update();

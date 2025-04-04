@@ -8,6 +8,8 @@ import cs3500.pawnsboard.model.Card;
 import cs3500.pawnsboard.controller.PawnsCardReader;
 import cs3500.pawnsboard.model.Player;
 import cs3500.pawnsboard.model.UserPlayer;
+import cs3500.pawnsboard.model.strategies.StrategyFillFirst;
+import cs3500.pawnsboard.model.strategies.StrategyMaximizeRowScore;
 import cs3500.pawnsboard.view.PawnsBoardVisualView;
 
 /**
@@ -27,7 +29,7 @@ public class PawnsBoardGame {
 
     //Initializing PawnsBoardGame
     cs3500.pawnsboard.model.PawnsBoardGame model = new cs3500.pawnsboard.model.PawnsBoardGame(3, 5);
-    UserPlayer player1 = new UserPlayer(model, Player.RED);
+    UserPlayer player1 = new UserPlayer(model, Player.RED, new StrategyFillFirst());
     UserPlayer player2 = new UserPlayer(model, Player.BLUE);
     model.startGame(redDeck, blueDeck, 5, true);
     PawnsBoardVisualView viewPlayer1 = new PawnsBoardVisualView(model, Player.RED);

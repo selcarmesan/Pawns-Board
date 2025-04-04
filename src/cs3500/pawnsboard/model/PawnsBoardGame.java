@@ -535,12 +535,12 @@ public class PawnsBoardGame implements PawnsBoard, ModelUpdates {
     if (firstTurnOver) {
       drawCard(getCurrentTurn());
     }
+    firstTurnOver = true;
     if (currentTurn == Player.RED) {
       turnStartedRed();
     } else {
       turnStartedBlue();
     }
-    firstTurnOver = true;
   }
 
   private void influenceBoard(int row, int col, Card card) {
@@ -585,13 +585,13 @@ public class PawnsBoardGame implements PawnsBoard, ModelUpdates {
    */
   @Override
   public void turnStartedRed() {
+    turnStarted(Player.RED);
     if (isGameOver()) {
       return;
     }
     for (ModelUpdateSubscriber listener : redListeners) {
       listener.notifyView("Your turn has started!");
     }
-    turnStarted(Player.RED);
   }
 
   /**
@@ -599,13 +599,13 @@ public class PawnsBoardGame implements PawnsBoard, ModelUpdates {
    */
   @Override
   public void turnStartedBlue() {
+    turnStarted(Player.BLUE);
     if (isGameOver()) {
       return;
     }
     for (ModelUpdateSubscriber listener : blueListeners) {
       listener.notifyView("Your turn has started!");
     }
-    turnStarted(Player.BLUE);
   }
 
   private void turnStarted(Player player) {

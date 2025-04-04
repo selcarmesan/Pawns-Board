@@ -225,8 +225,6 @@ public class PawnsBoardVisualView extends JFrame
         notify("You must select a cell and card to play.");
       } else {
         makePlay(lastChosenCell.getRow(), lastChosenCell.getCol(), lastChosenCard.getIndex());
-        lastChosenCell = null;
-        lastChosenCard = null;
       }
     } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
       skipTurn();
@@ -287,8 +285,6 @@ public class PawnsBoardVisualView extends JFrame
    */
   @Override
   public void notify(String message) {
-    System.out.println("Popup for " + player + ": " + message);
-    // Add some code to have a popup or some other component to notify with the message
     JOptionPane.showMessageDialog(null, message,
             "Popup for " + player + ":", JOptionPane.INFORMATION_MESSAGE);
   }
