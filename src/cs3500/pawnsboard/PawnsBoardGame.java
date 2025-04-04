@@ -30,23 +30,15 @@ public class PawnsBoardGame {
    * Runs the new game with predetermined moves until completion.
    */
   public static void main(String[] args) {
-    Readable in = new InputStreamReader(System.in);
-    Scanner sc = new Scanner(in);
-    System.out.println("Type four words, two for the file paths for RED and BLUE");
-    System.out.println("And one for the RED player's AI, and one for the BLUE player's AI");
-    System.out.println("Options: ");
-    System.out.println("1. 'human' - for a GUI controlled player");
-    System.out.println("2. 'strategy1' - for a machine player which picks the first open option");
-    System.out.println("3. 'strategy2' - for a machine player which maximizes row score");
     //Initializing PawnsBoardGame
-    File file1 = new File(sc.next());
-    File file2 = new File(sc.next());
     try {
+      File file1 = new File(args[0]);
+      File file2 = new File(args[1]);
       List<Card> redDeck = PawnsCardReader.readCards(Player.RED, file1);
       List<Card> blueDeck = PawnsCardReader.readCards(Player.BLUE, file2);
       PawnsBoardSimple model = new PawnsBoardSimple(3, 5);
-      UserPlayer player1 = createPlayer(model, Player.RED, sc.next());
-      UserPlayer player2 = createPlayer(model, Player.BLUE, sc.next());
+      UserPlayer player1 = createPlayer(model, Player.RED, args[2]);
+      UserPlayer player2 = createPlayer(model, Player.BLUE, args[3]);
       if (player1 == null || player2 == null) {
         System.out.println("Invalid commands chosen");
         return;
@@ -56,8 +48,8 @@ public class PawnsBoardGame {
       PawnsBoardVisualView view2 = new PawnsBoardVisualView(model, Player.BLUE);
       PawnsBoardGUIController controller1 = new PawnsBoardGUIController(model, player1, view1);
       PawnsBoardGUIController controller2 = new PawnsBoardGUIController(model, player2, view2);
-    } catch (IllegalArgumentException e) {
-      System.out.println("Incorrect file format or location");
+    } catch (Exception e) {
+      System.out.println("Incorrect entering of parameters");
     }
   }
 

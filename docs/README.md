@@ -20,7 +20,10 @@ To run this project, run the .jar file, while specifying four terms after it.  T
 the config file locations of the red and blue decks, respectively.  Specific information on the
 formatting of pawns board config files can be found in the javadoc for PawnsCardReader.
 The second two words represent what AI is controlling each player red and blue, respectively.
-The available strategies and human players can be found in detail in the javadoc for PawnsBoardGame.
+The available options are:
+- 'human' for GUI controlled moves
+- 'strategy1' for a machine player which plays the first possible move
+- 'strategy2' for a machine player which tries to win over rows
 
 Keyboard input to confirm is the enter key and the input to pass is the space bar while playing.
 
