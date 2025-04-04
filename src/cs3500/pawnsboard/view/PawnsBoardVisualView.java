@@ -27,7 +27,7 @@ import cs3500.pawnsboard.model.observer.UserPlayerActions;
 public class PawnsBoardVisualView extends JFrame
         implements PawnsBoardVisual, KeyListener, UserPlayerActions {
 
-  PawnsBoardReadOnly model;
+  private final PawnsBoardReadOnly model;
   private int width;
   private int height;
   private final Player player;
