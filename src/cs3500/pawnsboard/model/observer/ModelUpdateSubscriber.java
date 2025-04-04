@@ -1,7 +1,5 @@
 package cs3500.pawnsboard.model.observer;
 
-import cs3500.pawnsboard.model.Player;
-
 /**
  * Houses the necessary methods for reacting to updates from the model about the game state.
  */

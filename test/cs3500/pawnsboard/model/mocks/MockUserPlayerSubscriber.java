@@ -30,7 +30,7 @@ public class MockUserPlayerSubscriber implements UserPlayerActionSubscriber {
   }
 
   /**
-   * Calls for a turn to be skipped for the player
+   * Calls for a turn to be skipped for the player.
    */
   @Override
   public void passMove() {

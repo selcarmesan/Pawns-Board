@@ -1,7 +1,5 @@
 package cs3500.pawnsboard.model.observer;
 
-import cs3500.pawnsboard.model.Player;
-
 /**
  * Contains the necessary methods for responding for a user method being taken.
  */
@@ -16,7 +14,7 @@ public interface UserPlayerActionSubscriber {
   void makeMove(int row, int col, int index);
 
   /**
-   * Calls for a turn to be skipped for the player
+   * Calls for a turn to be skipped for the player.
    */
   void passMove();
 }

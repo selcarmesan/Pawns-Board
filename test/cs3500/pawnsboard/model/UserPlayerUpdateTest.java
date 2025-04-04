@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cs3500.pawnsboard.model.mocks.MockUserPlayerSubscriber;
-import cs3500.pawnsboard.model.observer.UserPlayerActionSubscriber;
 import cs3500.pawnsboard.model.observer.UserPlayerActions;
 
 import static org.junit.Assert.assertThrows;
@@ -17,14 +16,12 @@ public class UserPlayerUpdateTest {
 
   private StringBuilder sb;
   private UserPlayerActions up;
-  private UserPlayerActionSubscriber listener;
 
   @Before
   public void setUp() {
     sb = new StringBuilder();
-    listener = new MockUserPlayerSubscriber(sb);
     up = new UserPlayer(new PawnsBoardSimple(3, 5), Player.RED);
-    up.addListener(listener);
+    up.addListener(new MockUserPlayerSubscriber(sb));
   }
 
   @Test

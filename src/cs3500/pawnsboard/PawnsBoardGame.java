@@ -52,10 +52,10 @@ public class PawnsBoardGame {
         return;
       }
       model.startGame(redDeck, blueDeck, 5, true);
-      PawnsBoardVisualView viewPlayer1 = new PawnsBoardVisualView(model, Player.RED);
-      PawnsBoardVisualView viewPlayer2 = new PawnsBoardVisualView(model, Player.BLUE);
-      PawnsBoardGUIController controller1 = new PawnsBoardGUIController(model, player1, viewPlayer1);
-      PawnsBoardGUIController controller2 = new PawnsBoardGUIController(model, player2, viewPlayer2);
+      PawnsBoardVisualView view1 = new PawnsBoardVisualView(model, Player.RED);
+      PawnsBoardVisualView view2 = new PawnsBoardVisualView(model, Player.BLUE);
+      PawnsBoardGUIController controller1 = new PawnsBoardGUIController(model, player1, view1);
+      PawnsBoardGUIController controller2 = new PawnsBoardGUIController(model, player2, view2);
     } catch (IllegalArgumentException e) {
       System.out.println("Incorrect file format or location");
     }

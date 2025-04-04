@@ -35,5 +35,5 @@ public interface PawnsBoardVisual extends PawnsBoardView {
    * @param message the message notification
    * @throws IllegalArgumentException if message is null
    */
-   void notify(String message);
+  void notify(String message);
 }

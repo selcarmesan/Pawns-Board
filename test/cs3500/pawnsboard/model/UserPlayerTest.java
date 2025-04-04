@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test class for User Player
+ * Test class for User Player.
  */
 public class UserPlayerTest {
 

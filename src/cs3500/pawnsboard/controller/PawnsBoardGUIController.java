@@ -15,7 +15,16 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
   private final UserPlayer player;
   private final PawnsBoardVisualView view;
 
-  public PawnsBoardGUIController(PawnsBoardSimple model, UserPlayer player, PawnsBoardVisualView view) {
+  /**
+   * Creates a new GUI controller for a specific player for a game of pawns board, using a premade
+   * GUI.
+   * @param model the model to control
+   * @param player the player to take turns for
+   * @param view the view to be informed from
+   * @throws IllegalArgumentException if any arguments are null
+   */
+  public PawnsBoardGUIController(PawnsBoardSimple model, UserPlayer player,
+                                 PawnsBoardVisualView view) {
     if (model == null || player == null || view == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
@@ -87,7 +96,7 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
   }
 
   /**
-   * Calls for a turn to be skipped for the player
+   * Calls for a turn to be skipped for the player.
    */
   @Override
   public void passMove() {

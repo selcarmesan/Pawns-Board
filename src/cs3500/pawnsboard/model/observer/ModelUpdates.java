@@ -24,7 +24,7 @@ public interface ModelUpdates {
   void gameEnded();
 
   /**
-   * Adds a listener for the model update events for the particular player
+   * Adds a listener for the model update events for the particular player.
    * @param listener the listener to add
    * @param player the player to give updates for
    * @throws IllegalArgumentException if listener is null
