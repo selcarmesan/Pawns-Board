@@ -610,10 +610,10 @@ public class PawnsBoardSimple implements PawnsBoard, ModelUpdates {
 
   private void turnStarted(Player player) {
     for (ModelUpdateSubscriber listener : redListeners) {
-      listener.changeTurn(player);
+      listener.changeTurn();
     }
     for (ModelUpdateSubscriber listener : blueListeners) {
-      listener.changeTurn(player);
+      listener.changeTurn();
     }
   }
 

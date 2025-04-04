@@ -16,11 +16,11 @@ Clone the repository 'git clone https://github.com/selcarmesan/Pawns-Board/' \
 Navigate to the directory and ensure dependencies are install (OpenJDK 20.0.1)
 
 ## Quick-Start:
-For project usage either manually run the main file and follow the command line instructions before
-opening the GUI.
-
-Alternatively, run the .jar file, making sure the supporting docs containing the config files in 
-the same folder.
+To run this project, run the .jar file, while specifying four terms after it.  The first two are
+the config file locations of the red and blue decks, respectively.  Specific information on the
+formatting of pawns board config files can be found in the javadoc for PawnsCardReader.
+The second two words represent what AI is controlling each player red and blue, respectively.
+The available strategies and human players can be found in detail in the javadoc for PawnsBoardGame.
 
 Keyboard input to confirm is the enter key and the input to pass is the space bar while playing.
 

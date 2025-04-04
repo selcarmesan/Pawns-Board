@@ -15,7 +15,6 @@ public interface ModelUpdateSubscriber {
 
   /**
    * Responds to the change of a turn, likely disabling inputs from the other player.
-   * @param player the new player turn
    */
-  void changeTurn(Player player);
+  void changeTurn();
 }

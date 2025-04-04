@@ -1,7 +1,6 @@
 package cs3500.pawnsboard.controller;
 
 import cs3500.pawnsboard.model.PawnsBoardSimple;
-import cs3500.pawnsboard.model.Player;
 import cs3500.pawnsboard.model.UserPlayer;
 import cs3500.pawnsboard.model.observer.ModelUpdateSubscriber;
 import cs3500.pawnsboard.model.observer.UserPlayerActionSubscriber;
@@ -26,7 +25,7 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
     this.model = model;
     this.player = player;
     this.view = view;
-    changeTurn(model.getCurrentTurn());
+    changeTurn();
     if (model.getCurrentTurn() == this.player.getThisPlayer()) {
       notifyView("Your turn has started");
     }
@@ -46,23 +45,20 @@ public class PawnsBoardGUIController implements ModelUpdateSubscriber, UserPlaye
 
   /**
    * Responds to the change of a turn, likely disabling inputs from the other player.
-   *
-   * @param player the new player turn
    */
   @Override
-  public void changeTurn(Player player) {
-    System.out.println("Changing turn to " + player + "for " + this.player.getThisPlayer());
+  public void changeTurn() {
     if (model.isGameOver()) {
       view.setEnabled(true);
       return;
     }
     if (this.player.isMachine()) {
       view.setEnabled(false);
-      if (player == this.player.getThisPlayer()) {
+      if (model.getCurrentTurn() == this.player.getThisPlayer()) {
         this.player.decideMove();
       }
     } else {
-      view.setEnabled(player == this.player.getThisPlayer());
+      view.setEnabled(model.getCurrentTurn() == this.player.getThisPlayer());
     }
     view.update();
   }
