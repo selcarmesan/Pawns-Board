@@ -1,4 +1,4 @@
-package cs3500.pawnsboard.provider.model;
+package cs3500.model;
 
 /**
  * Represents different influence types a card can have on the board.

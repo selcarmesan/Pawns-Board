@@ -1,4 +1,4 @@
-package cs3500.pawnsboard.provider.view;
+package cs3500.view;
 
 /**
  * Interface to design the GUI view of Pawns Board.

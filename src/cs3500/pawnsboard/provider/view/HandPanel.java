@@ -1,9 +1,7 @@
-package cs3500.pawnsboard.provider.view;
+package cs3500.view;
 
-import cs3500.pawnsboard.provider.model.PlayerColor;
-import cs3500.pawnsboard.provider.model.ReadonlyPawnsBoardModel;
-import cs3500.pawnsboard.provider.model.Card;
-
+import cs3500.model.PlayerColor;
+import cs3500.model.ReadonlyPawnsBoardModel;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;

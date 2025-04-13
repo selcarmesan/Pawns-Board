@@ -1,6 +1,6 @@
-package cs3500.pawnsboard.provider.players;
+package cs3500.players;
 
-import cs3500.pawnsboard.provider.model.PlayerColor;
+import cs3500.model.PlayerColor;
 
 /**
  * Interface for listening to model status changes.

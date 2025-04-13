@@ -1,6 +1,4 @@
-package cs3500.pawnsboard.provider.players;
-
-import cs3500.pawnsboard.provider.model.Card;
+package cs3500.players;
 
 /**
  * Interface for listening to player actions in the game.

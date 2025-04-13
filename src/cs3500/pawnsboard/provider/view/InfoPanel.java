@@ -1,6 +1,6 @@
-package cs3500.pawnsboard.provider.view;
+package cs3500.view;
 
-import cs3500.pawnsboard.provider.model.PlayerColor;
+import cs3500.model.PlayerColor;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

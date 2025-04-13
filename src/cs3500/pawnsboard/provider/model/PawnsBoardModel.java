@@ -1,6 +1,6 @@
-package cs3500.pawnsboard.provider.model;
+package cs3500.model;
 
-import cs3500.pawnsboard.provider.players.ModelStatusListener;
+import cs3500.players.ModelStatusListener;
 
 /**
  * Represents the code functionality of the game model.

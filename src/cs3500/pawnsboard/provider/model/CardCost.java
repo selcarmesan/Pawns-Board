@@ -1,4 +1,4 @@
-package cs3500.pawnsboard.provider.model;
+package cs3500.model;
 
 /**
  * Enum class defining the possible card costs in the game.
