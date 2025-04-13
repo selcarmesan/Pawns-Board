@@ -1,4 +1,6 @@
-package cs3500.view;
+package cs3500.pawnsboard.provider.view;
+
+import cs3500.pawnsboard.provider.model.Card;
 
 /**
  * Interface to notify the controller when a card is clicked.

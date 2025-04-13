@@ -1,7 +1,7 @@
-package cs3500.view;
+package cs3500.pawnsboard.provider.view;
 
-import cs3500.model.PlayerColor;
-import cs3500.model.ReadonlyPawnsBoardModel;
+import cs3500.pawnsboard.provider.model.PlayerColor;
+import cs3500.pawnsboard.provider.model.ReadonlyPawnsBoardModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.awt.BorderLayout;

@@ -1,4 +1,4 @@
-package cs3500.model;
+package cs3500.pawnsboard.provider.model;
 
 import java.util.List;
 
