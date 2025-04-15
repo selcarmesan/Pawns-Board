@@ -101,3 +101,7 @@ Homework 7 Changelog:
 methods in them to correctly call them during the proper events.
 - Changed the view to only care about a single player that is specified upon construction, only 
 showing their hand, and only allowing them to interact when it is their turn.
+
+Homework 8 Changelog:
+- Changed the model to now have a getDeck method, which returns a copy of that player's remaining
+deck, such that the adapter works properly as their model needs to be able to return the deck.

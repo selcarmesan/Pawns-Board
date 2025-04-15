@@ -83,6 +83,19 @@ public class MockBoardChecking implements PawnsBoardReadOnly {
   }
 
   /**
+   * Returns the remaining deck of cards belonging to the specific player.
+   *
+   * @param player the player whose deck is returned
+   * @return the player's deck
+   * @throws IllegalStateException    if game is not in progress
+   * @throws IllegalArgumentException if player is null
+   */
+  @Override
+  public List<Card> getRemainingDeck(Player player) {
+    return null;
+  }
+
+  /**
    * Returns whether a move for the current player is valid, a move being the placement of
    * a card onto a location on the board.  A move is valid if the card exists, the location is on
    * the board, and the location has enough owned pawns by the player to cover the cost of the card.

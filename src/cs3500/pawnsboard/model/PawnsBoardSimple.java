@@ -283,6 +283,23 @@ public class PawnsBoardSimple implements PawnsBoard, ModelUpdates {
    */
   @Override
   public List<Card> getHand(Player player) {
+    return getCards(player, redHand, blueHand);
+  }
+
+  /**
+   * Returns the remaining deck of cards belonging to the specific player.
+   *
+   * @param player the player whose deck is returned
+   * @return the player's deck
+   * @throws IllegalStateException    if game is not in progress
+   * @throws IllegalArgumentException if player is null
+   */
+  @Override
+  public List<Card> getRemainingDeck(Player player) {
+    return getCards(player, redDeck, blueDeck);
+  }
+
+  private List<Card> getCards(Player player, List<Card> red, List<Card> blue) {
     if (!gameStarted) {
       throw new IllegalStateException("Game not started");
     }
@@ -291,12 +308,12 @@ public class PawnsBoardSimple implements PawnsBoard, ModelUpdates {
     }
     List<Card> hand = new ArrayList<>();
     if (player == Player.RED) {
-      for (Card card : redHand) {
+      for (Card card : red) {
         hand.add(new PawnsCard(card.getName(), card.getCost(),
                 card.getValue(), card.getInfluence()));
       }
     } else {
-      for (Card card : blueHand) {
+      for (Card card : blue) {
         hand.add(new PawnsCard(card.getName(), card.getCost(),
                 card.getValue(), card.getInfluence()));
       }
