@@ -77,13 +77,12 @@ public class CardAdapt implements cs3500.pawnsboard.provider.model.Card {
       for (int j = 0; j < 5; j++) {
         if (oldGrid[i][j]) {
           grid[i][j] = InfluenceType.INFLUENCE;
-        } else if (i == 2 || j == 2) {
-          grid[i][j] = InfluenceType.CENTER;
         } else {
           grid[i][j] = InfluenceType.NONE;
         }
       }
     }
+    grid[2][2] = InfluenceType.CENTER;
     return grid;
   }
 

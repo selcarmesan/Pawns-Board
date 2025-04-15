@@ -9,8 +9,10 @@ import cs3500.pawnsboard.controller.PawnsCardReader;
 import cs3500.pawnsboard.model.PawnsBoardSimple;
 import cs3500.pawnsboard.model.Player;
 import cs3500.pawnsboard.model.UserPlayer;
+import cs3500.pawnsboard.model.adapter.PawnsBoardAdapt;
 import cs3500.pawnsboard.model.strategies.StrategyFillFirst;
 import cs3500.pawnsboard.model.strategies.StrategyMaximizeRowScore;
+import cs3500.pawnsboard.provider.view.PawnsBoardGUI;
 import cs3500.pawnsboard.view.PawnsBoardVisualView;
 
 /**
@@ -35,6 +37,7 @@ public class PawnsBoardGame {
       List<Card> redDeck = PawnsCardReader.readCards(Player.RED, file1);
       List<Card> blueDeck = PawnsCardReader.readCards(Player.BLUE, file2);
       PawnsBoardSimple model = new PawnsBoardSimple(3, 5);
+      PawnsBoardAdapt providerModel = new PawnsBoardAdapt(model, redDeck, blueDeck);
       UserPlayer player1 = createPlayer(model, Player.RED, args[2]);
       UserPlayer player2 = createPlayer(model, Player.BLUE, args[3]);
       if (player1 == null || player2 == null) {
@@ -43,9 +46,10 @@ public class PawnsBoardGame {
       }
       model.startGame(redDeck, blueDeck, 5, true);
       PawnsBoardVisualView view1 = new PawnsBoardVisualView(model, Player.RED);
-      PawnsBoardVisualView view2 = new PawnsBoardVisualView(model, Player.BLUE);
+      PawnsBoardGUI providerView = new PawnsBoardGUI(providerModel);
+      providerView.makeVisible();
       PawnsBoardGUIController controller1 = new PawnsBoardGUIController(model, player1, view1);
-      PawnsBoardGUIController controller2 = new PawnsBoardGUIController(model, player2, view2);
+      //PawnsBoardGUIController providerController = new PawnsBoardGUIController(model, player2, providerView);
     } catch (Exception e) {
       System.out.println("Incorrect entering of parameters");
     }
