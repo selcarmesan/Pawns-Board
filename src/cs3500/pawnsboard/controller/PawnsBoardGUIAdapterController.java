@@ -13,10 +13,11 @@ import cs3500.pawnsboard.model.observer.ModelUpdateSubscriber;
 import cs3500.pawnsboard.model.observer.UserPlayerActionSubscriber;
 import cs3500.pawnsboard.provider.model.Card;
 import cs3500.pawnsboard.provider.players.PlayerActionListener;
+import cs3500.pawnsboard.provider.view.CardClickActions;
 import cs3500.pawnsboard.provider.view.PawnsBoardGUIView;
 
 public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, PlayerActionListener,
-        UserPlayerActionSubscriber {
+        UserPlayerActionSubscriber, CardClickActions {
 
   private final PawnsBoardSimple model;
   private final UserPlayer player;
@@ -37,21 +38,11 @@ public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, Pl
       public void mouseClicked(MouseEvent e) {
         Point selectedCell = view.getBoardPanel().getSelectedCell();
         if (selectedCell != null) {
-          onCellSelected(selectedCell.x, selectedCell.y);
+          onCellSelected(selectedCell.y, selectedCell.x);
         }
       }
     });
-    view.getHandPanel().addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        Card selectedCard = view.getHandPanel().getSelectedCard();
-        int selectedCardIndex = view.getHandPanel().getSelectedCardIndex();
-        if (selectedCard != null) {
-          onCardSelected(selectedCard);
-          onCardSelectedIndex(selectedCardIndex);
-        }
-      }
-    });
+    view.getHandPanel().setCardClickListener(this);
     view.getBoardPanel().addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent e) {
@@ -93,13 +84,8 @@ public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, Pl
    */
   @Override
   public void changeTurn() {
-    if (model.getCurrentTurn() == this.player.getThisPlayer()) {
-      view.enableInput();
-      updateRowScores();
-      view.refresh();
-    } else {
-      view.disableInput();
-    }
+    updateRowScores();
+    view.refresh();
     view.switchTurns();
   }
 
@@ -140,11 +126,18 @@ public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, Pl
    */
   @Override
   public void onMoveConfirmed() {
-    if (model.isMoveValid(row, col, index, model.getCurrentTurn())
-            && model.getCurrentTurn() == this.player.getThisPlayer()) {
-      model.placeCard(row, col, index);
-      changeTurn();
-      view.refresh();
+    if (model.getCurrentTurn() == this.player.getThisPlayer()) {
+      try {
+        if (model.isMoveValid(row, col, index, model.getCurrentTurn())) {
+          model.placeCard(row, col, index);
+          changeTurn();
+          view.refresh();
+        }
+      } catch (IllegalArgumentException e) {
+        System.out.println(e.getMessage());
+        notifyView("Invalid move");
+      }
+
     } else {
       notifyView("Valid space and card not selected, or it is not your turn");
     }
@@ -185,5 +178,17 @@ public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, Pl
   @Override
   public void passMove() {
     onTurnPassed();
+  }
+
+  /**
+   * Called when a card in the hand panel is clicked.
+   *
+   * @param selectedCard the card that was clicked, or null if no card is selected
+   * @param index        the index of the selected card in the hand, or -1 if not found
+   */
+  @Override
+  public void onCardClicked(Card selectedCard, int index) {
+    this.index = index;
+    this.card = selectedCard;
   }
 }
