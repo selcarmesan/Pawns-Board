@@ -82,7 +82,7 @@ public class BoardAdapt implements Board {
                                  int row, int col, Card card) {
     for (int i = -2; i < 3; i++) {
       for (int j = -2; j < 3; j++) {
-        if (CoordValid(row + i, col + j) && new OurCardAdapt(card).getInfluence()[i][j]) {
+        if (coordValid(row + i, col + j) && new OurCardAdapt(card).getInfluence()[i][j]) {
           Cell cell = grid[row + i][col + j];
           if (!(cell.getCard() == null && (i != 0 || j != 0))) {
             if (cell.getPawns() == 0) {
@@ -96,7 +96,7 @@ public class BoardAdapt implements Board {
     }
   }
 
-  private boolean CoordValid(int row, int col) {
+  private boolean coordValid(int row, int col) {
     return row >= 0 && row < grid.length && col >= 0 && col < grid[0].length;
   }
 
@@ -106,7 +106,7 @@ public class BoardAdapt implements Board {
    * board state.
    *
    * @return true if all cells of the board have been filled
-   * and if there are no more pawns left, false if otherwise.
+   *         and if there are no more pawns left, false if otherwise.
    */
   @Override
   public boolean isGameOver() {
@@ -129,7 +129,7 @@ public class BoardAdapt implements Board {
    * Calculates the total scores for both players.
    *
    * @return An array where the first element is Red's total score
-   * and the second is Blue's total score.
+   *         and the second is Blue's total score.
    */
   @Override
   public int[] calculateTotalScores() {

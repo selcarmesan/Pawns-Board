@@ -19,6 +19,13 @@ public class PlayerAdapt implements Player {
   private final List<cs3500.pawnsboard.model.Card> deck;
   private final List<cs3500.pawnsboard.model.Card> hand;
 
+  /**
+   * Adapts a new player of the provider's type.
+   * @param color the player's color
+   * @param deck the player's current deck
+   * @param hand the player's current hand
+   * @throws IllegalArgumentException if color, deck, or hand are null, or if deck or hand have null
+   */
   public PlayerAdapt(cs3500.pawnsboard.model.Player color, List<cs3500.pawnsboard.model.Card> deck,
                      List<cs3500.pawnsboard.model.Card> hand) {
     if (color == null || deck == null || hand == null) {
@@ -89,7 +96,7 @@ public class PlayerAdapt implements Player {
    * @param card the card to be played
    * @param cell the cell (position) on the board
    * @return true if the cell has enough of the player's own pawns
-   * to cover the cost of the card, false if otherwise
+   *         to cover the cost of the card, false if otherwise
    */
   @Override
   public boolean canPlayCard(Card card, Cell cell) {

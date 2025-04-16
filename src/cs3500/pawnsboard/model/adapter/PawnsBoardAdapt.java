@@ -13,6 +13,9 @@ import cs3500.pawnsboard.provider.model.Player;
 import cs3500.pawnsboard.provider.model.PlayerColor;
 import cs3500.pawnsboard.provider.players.ModelStatusListener;
 
+/**
+ * Adapter class that acts as the provider's game, delegating to ours.
+ */
 public class PawnsBoardAdapt implements PawnsBoardModel {
 
   private final PawnsBoard model;
@@ -22,6 +25,14 @@ public class PawnsBoardAdapt implements PawnsBoardModel {
 
   private final List<ModelStatusListener> listeners;
 
+  /**
+   * Creates a new adapted pawns board.
+   *
+   * @param model    the model to adapt
+   * @param redDeck  the red player's starting deck
+   * @param blueDeck the blue player's starting deck
+   * @throws IllegalArgumentException if model or decks are null, or if decks contain null
+   */
   public PawnsBoardAdapt(PawnsBoard model, List<cs3500.pawnsboard.model.Card> redDeck,
                          List<cs3500.pawnsboard.model.Card> blueDeck) {
     if (model == null || redDeck == null || blueDeck == null) {
@@ -162,7 +173,7 @@ public class PawnsBoardAdapt implements PawnsBoardModel {
    * board state.
    *
    * @return true if all cells of the board have been filled
-   * and if there are no more pawns left, false if otherwise.
+   *         and if there are no more pawns left, false if otherwise.
    */
   @Override
   public boolean isGameOver() {
@@ -245,7 +256,7 @@ public class PawnsBoardAdapt implements PawnsBoardModel {
    * Calculates the total scores for both players.
    *
    * @return An array where the first element is Red's total score
-   * and the second is Blue's total score.
+   *         and the second is Blue's total score.
    */
   @Override
   public int[] calculateScores() {
@@ -297,13 +308,13 @@ public class PawnsBoardAdapt implements PawnsBoardModel {
    */
   @Override
   public int[][] getFullPawnCounts() {
-     int[][] pawns = new int[model.getRows()][model.getCols()];
-     for (int i = 0; i < model.getRows(); i++) {
-       for (int j = 0; j < model.getCols(); j++) {
-         pawns[i][j] = model.getCellAt(i, j).getPawns();
-       }
-     }
-     return pawns;
+    int[][] pawns = new int[model.getRows()][model.getCols()];
+    for (int i = 0; i < model.getRows(); i++) {
+      for (int j = 0; j < model.getCols(); j++) {
+        pawns[i][j] = model.getCellAt(i, j).getPawns();
+      }
+    }
+    return pawns;
   }
 
   /**
@@ -354,7 +365,7 @@ public class PawnsBoardAdapt implements PawnsBoardModel {
       return model.getTotalScore(cs3500.pawnsboard.model.Player.BLUE);
     }
   }
-  
+
   private PlayerColor getColorFromPlayer(cs3500.pawnsboard.model.Player player) {
     if (player == cs3500.pawnsboard.model.Player.RED) {
       return PlayerColor.RED;

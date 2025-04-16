@@ -1,6 +1,6 @@
 package cs3500.pawnsboard.controller;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -16,6 +16,9 @@ import cs3500.pawnsboard.provider.players.PlayerActionListener;
 import cs3500.pawnsboard.provider.view.CardClickActions;
 import cs3500.pawnsboard.provider.view.PawnsBoardGUIView;
 
+/**
+ * Creates a controller for the provider's view, using a model and player of the original type.
+ */
 public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, PlayerActionListener,
         UserPlayerActionSubscriber, CardClickActions {
 
@@ -28,7 +31,15 @@ public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, Pl
   private int row;
   private int col;
 
-  public PawnsBoardGUIAdapterController(PawnsBoardSimple model, UserPlayer player, PawnsBoardGUIView view) {
+  /**
+   * Creates a new provider GUI controller.
+   * @param model the model the GUI represents
+   * @param player the player this controller is for
+   * @param view the provider's view to receive inputs from
+   * @throws IllegalArgumentException if model, player, or view are null
+   */
+  public PawnsBoardGUIAdapterController(PawnsBoardSimple model, UserPlayer player,
+                                        PawnsBoardGUIView view) {
     if (model == null || player == null || view == null) {
       throw new IllegalArgumentException("Parameters cannot be null");
     }
