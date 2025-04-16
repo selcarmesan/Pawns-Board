@@ -17,7 +17,7 @@ import cs3500.pawnsboard.view.PawnsBoardVisualView;
 public class PawnsBoardMainFake {
 
   public static void main(String[] args) {
-//    try {
+      try {
       File file1 = new File("docs/deckRed.config");
       File file2 = new File("docs/deckBlue.config");
       List<Card> redDeck = PawnsCardReader.readCards(Player.RED, file1);
@@ -33,8 +33,8 @@ public class PawnsBoardMainFake {
       PawnsBoardGUIController controller1 = new PawnsBoardGUIController(model, player1, view1);
       PawnsBoardGUIAdapterController controller2 =
               new PawnsBoardGUIAdapterController(model, player2, providerView);
-//    } catch (Exception e) {
-//      System.out.println("Incorrect entering of parameters");
-//    }
+      } catch (Exception e) {
+        System.out.println("Incorrect entering of parameters");
+      }
   }
 }

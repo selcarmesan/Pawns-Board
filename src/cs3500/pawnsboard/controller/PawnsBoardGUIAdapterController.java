@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import cs3500.pawnsboard.model.PawnsBoardSimple;
+import cs3500.pawnsboard.model.Player;
 import cs3500.pawnsboard.model.UserPlayer;
 import cs3500.pawnsboard.model.observer.ModelUpdateSubscriber;
 import cs3500.pawnsboard.model.observer.UserPlayerActionSubscriber;
@@ -94,11 +95,18 @@ public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, Pl
   public void changeTurn() {
     if (model.getCurrentTurn() == this.player.getThisPlayer()) {
       view.enableInput();
+      updateRowScores();
       view.refresh();
     } else {
       view.disableInput();
     }
     view.switchTurns();
+  }
+
+  private void updateRowScores() {
+    for (int i = 0; i < model.getRows(); i++) {
+      view.updateRowScores(i, model.getRowScore(Player.RED, i), model.getRowScore(Player.BLUE, i));
+    }
   }
 
   /**
