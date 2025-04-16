@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import cs3500.pawnsboard.controller.PawnsBoardGUIController;
+import cs3500.pawnsboard.controller.PawnsBoardGUIAdapterController;
 import cs3500.pawnsboard.model.Card;
 import cs3500.pawnsboard.controller.PawnsCardReader;
 import cs3500.pawnsboard.model.PawnsBoardSimple;
@@ -49,7 +50,8 @@ public class PawnsBoardGame {
       PawnsBoardGUI providerView = new PawnsBoardGUI(providerModel);
       providerView.makeVisible();
       PawnsBoardGUIController controller1 = new PawnsBoardGUIController(model, player1, view1);
-      //PawnsBoardGUIController providerController = new PawnsBoardGUIController(model, player2, providerView);
+      PawnsBoardGUIAdapterController providerController =
+              new PawnsBoardGUIAdapterController(model, player2, providerView);
     } catch (Exception e) {
       System.out.println("Incorrect entering of parameters");
     }

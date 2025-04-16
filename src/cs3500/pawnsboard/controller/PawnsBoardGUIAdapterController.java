@@ -76,7 +76,11 @@ public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, Pl
    */
   @Override
   public void notifyView(String message) {
-    view.printErrorMessage(message, "Information Popup");
+    if (message.toLowerCase().contains("game has ended")) {
+      view.printGameOverMessage();
+    } else {
+      view.printErrorMessage(message, "Information Popup");
+    }
   }
 
   /**
