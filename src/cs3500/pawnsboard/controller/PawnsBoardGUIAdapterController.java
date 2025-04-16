@@ -79,6 +79,9 @@ public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, Pl
     if (message.toLowerCase().contains("game has ended")) {
       view.printGameOverMessage();
     } else {
+      if (player.isMachine()) {
+        return;
+      }
       view.printErrorMessage(message, "Information Popup");
     }
   }
@@ -91,6 +94,11 @@ public class PawnsBoardGUIAdapterController implements ModelUpdateSubscriber, Pl
     updateRowScores();
     view.refresh();
     view.switchTurns();
+    if (this.player.isMachine()) {
+      if (model.getCurrentTurn() == this.player.getThisPlayer()) {
+        this.player.decideMove();
+      }
+    }
   }
 
   private void updateRowScores() {

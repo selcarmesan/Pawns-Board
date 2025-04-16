@@ -1,0 +1,15 @@
+We did not have any updates required by the customers, so there isn't anything to say there,
+unfortunately.  When it comes to their design, in all honesty there are some parts of our design
+that we became more grateful for as a learned lesson, that ours felt relatively easy to use and
+lacking in unnecessary complexity after the changes we made between assignments.
+
+The only thing we did realize was lacking in our design, mostly through the need of it for a proper
+adaption, is the ability to get a copy of a player's remaining deck.  While this was never needed
+at all for our view/controller implementation, it may be handy to have available as a publicly
+exposed method, in case it were to be used for a more advanced view that has the number of deck
+cards left remaining, or shows upcoming cards for the sake of planning.
+
+Our providers were very helpful for communicating with.  We had made a pretty big ask of them early
+on to submit us four new interfaces that were required for us to be able to create our adapter
+properly, and they were able to do so.  Along with this, they listened well to make minor changes
+to these interfaces regarding types, even if the request to do so was late into the assignment.

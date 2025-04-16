@@ -1,0 +1,67 @@
+Code Critique:
+
+The code was in general a bit difficult to work with, and took some getting used to.  The model of
+it used four different classes as helpers, being cards, players, cells, and the board itself.  This
+would be fine on its own, but it led to a lack of modularity in some.  The Board, despite being a
+helper for the game itself, is what housed the scoring methods, despite the fact that these require
+an active game to be useful.  Same with Player, a class that houses only the color of that player,
+their deck, and their hand; 3 values where there is not much reason to not integrate them directly
+into the class itself.  This leads to issues with extra complication for receiving the current turn,
+as you instead receive a Player object, and then must look at its color. To fix these, it would be
+ideal to at the very least integrate the Player object into the class, and all calls needed based on
+it can be directed from it as well, with optional compression from there depending on personal
+preference.  There is no inherent issues with having Board as its own object, but it may help to
+think about what benefits are had from doing so, over taking the functionality of it outside its
+existence as a 2D array of cells and having the game interface handle it instead.
+
+It also lacked some implementation, namely in that it did not allow a custom hand size and defaulted
+to the minimum of a third of the deck size, and did not allow random drawing from the deck as an
+option, which made proper adapting difficult.  One particular issue with its design as well is two
+separate methods, copyBoard and getBoard.  One issue is that for some reason, despite both only
+returning a board and not directly altering the game, copyBoard is not in the ReadOnly version.
+Along with this is the issue that the latter, getBoard, is intended to return the actual board being
+used in the game, rather than a copy, as an exposed public method.  This is harmful design, as it
+could allow a client to modify this board and the game itself outside expected calls.  Lastly,
+rather than having separate interfaces for Listeners and Actions, only Listeners exist, with the
+rest baked directly into other interfaces, like with the model, which is a less encapsulated way to
+use the observer pattern.  Also, little note, CardClickActions sounds like an observer action class,
+yet is actually a listener, which was confusing for a while, so a slight change there may make it
+more clear.
+To fix this, first implement the required game start details as the assignment requested, remove
+getBoard entirely as only the model should be able to modify its own board, and move copyBoard to
+the readOnly interface instead.  Finally take out the observer related methods from non-observer
+interfaces and move them into their own for a much better overall organization with just that.
+
+Some Javadoc in the model was also slightly unclear.  For example, it seems as if a lot
+of methods are missing exception documentation for general null input cases.
+Along with this, one particular method getPlayerRowScores has unclear javadoc of whether the
+first index is the 0/1 indicator for red/blue, or if it is the second.  To deal with this we needed
+to look into its usage in the view, which an extra sentence could've simplified.
+Generally, just be sure javadoc is up to date.  It may be recommended to wait to write it until
+after the method has been implemented so that details such as exceptions are easier to spot, as
+they are sometimes hard to think about when just interface designing.
+
+Some limitations were had, more so towards the end.  Outside CardClickActions, the controller
+needed to directly construct all listeners within the view by adding mouse/key listeners, rather
+than using a pre-constructed observer interface, which was a slog.  Along with this, the usage
+of enable/disable within the interface of the view for some reason led the board panel to
+seemingly stop accepting click inputs, meaning we had to remove these calls in order for it to work
+properly.  The view, when refreshing, also did not automatically update scores, so the controller
+had to manually do so every time the turn switched.  Lastly, there did not seem to be any feature
+for actually displaying placed cards on the board.  Refreshes did not update that, and while there
+seemed to be some method in the Card/Hand panel section, it required a specific point to place the
+card, which does not work for updating the placement of cards the other player put down.
+With this, the design of the view in general and its components were somewhat unintuitive.  Rather
+than refreshing and redoing the entire board, some had multiple methods for specific changes to
+the layout, as if it were being affected in the same way that a model is.  The entire reason each
+requires the read only model as an input is to avoid this tedious method of updating, yet it was
+done so anyway.  A better structure might involve a singular large method with some helpers in each
+of these panels (not including its listeners) for updating it, and have it be called from the main
+view every refresh for much easier repainting.
+
+Thankfully these are easy fixes, and just require being more mindful of view layout in the future.
+This goes for most of the critique mentioned.  It is functional, was mostly easy and fun to adapt,
+although slow to do so, and while much of the issues regarding the view felt esoteric to figure out
+the issues with, the actual cause behind them is not difficult to tweak and fix.
+Overall, good groundwork, just a few issues here and there that made the usage of it tedious in some
+places, all of which can be weeded out with a little bit of extra work.

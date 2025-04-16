@@ -105,3 +105,23 @@ showing their hand, and only allowing them to interact when it is their turn.
 Homework 8 Changelog:
 - Changed the model to now have a getDeck method, which returns a copy of that player's remaining
 deck, such that the adapter works properly as their model needs to be able to return the deck.
+
+Functions unable to be properly implemented when adapting:
+- playTurn in PawnsBoardAdapt.  This is because their implementation uses a card, and ours uses a 
+hand index.  We can check for identical cards in the hand, but can't make sure it's referring to the
+right one in the case of duplicates, so it cannot be accurate. It has been implemented in the way as 
+described, yet it is not foolproof, therefore it is worth noting for potential bugs.
+- getBoard in PawnsBoardAdapt.  We were able to easily implement copyBoard, yet our adaptation 
+doesn't keep track of an actual Board object of theirs for the sake of running the game due to the 
+fact that it is an adapter, so it can't return the functional board.  More issues with getBoard 
+mentioned in the peer review.
+- startGame in PawnsBoardAdapt.  It functions properly, but always calls with a deck size of the 
+minimum between a third of the red deck's size, and a third of the blue deck's size.  It also always
+has randomDraw turned off.  This is due to their interface having zero functionality for random draw
+or custom deck size, as described in the peer review.
+- Unable to properly display placed cards on their GUI view implementation, as it was unsupported.
+- Unable to display card influence properly.  Their GUI manually mirrors it for blue cards before 
+showing, while our implementation has blue cards actually be designed with this mirrored influence, 
+rather than needing to manually check and flip it every time it is needed.
+All other features, being the adapter for the game itself, and the new controller to run their view,
+were implemented completely, as far as we are aware.
